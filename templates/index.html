@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🏠 House Price Prediction</h1>
+    <p>Enter the house details below</p>
+
+    <form action="/predict" method="POST">
+
+        <div class="grid">
+
+            <div class="input-box">
+                <label>Area (sq.ft)</label>
+                <input type="number" name="area" required>
+            </div>
+
+            <div class="input-box">
+                <label>Bedrooms</label>
+                <input type="number" name="bedrooms" required>
+            </div>
+
+            <div class="input-box">
+                <label>Bathrooms</label>
+                <input type="number" name="bathrooms" required>
+            </div>
+
+            <div class="input-box">
+                <label>Stories</label>
+                <input type="number" name="stories" required>
+            </div>
+
+            <div class="input-box">
+                <label>Main Road</label>
+                <select name="mainroad">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Guest Room</label>
+                <select name="guestroom">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Basement</label>
+                <select name="basement">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Hot Water Heating</label>
+                <select name="hotwaterheating">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Air Conditioning</label>
+                <select name="airconditioning">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Parking Spaces</label>
+                <input type="number" name="parking" required>
+            </div>
+
+            <div class="input-box">
+                <label>Location Category</label>
+                <select name="prefarea">
+                    <option value="1">Premium Area</option>
+                    <option value="0">Normal Area</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label>Furnishing</label>
+                <select id="furnishing">
+                    <option value="furnished">Furnished</option>
+                    <option value="semi">Semi-Furnished</option>
+                    <option value="un">Unfurnished</option>
+                </select>
+
+                <input type="hidden" name="furnishing_semi" id="semi" value="0">
+                <input type="hidden" name="furnishing_un" id="un" value="0">
+            </div>
+
+        </div>
+
+        <button type="submit">Predict Price</button>
+
+    </form>
+
+    {% if prediction %}
+
+    <div class="result">
+
+        <h2>Estimated Price</h2>
+
+        <h1>{{ prediction }}</h1>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+const furnishing = document.getElementById("furnishing");
+
+furnishing.addEventListener("change", function(){
+
+    document.getElementById("semi").value = 0;
+    document.getElementById("un").value = 0;
+
+    if(this.value==="semi")
+        document.getElementById("semi").value=1;
+
+    if(this.value==="un")
+        document.getElementById("un").value=1;
+
+});
+
+</script>
+
+</body>
+</html>
